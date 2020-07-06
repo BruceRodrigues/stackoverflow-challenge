@@ -3,7 +3,7 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class Stackoverflowuser extends Model {
+class SoUser extends Model {
 }
 
-module.exports = Stackoverflowuser
+module.exports = SoUser
