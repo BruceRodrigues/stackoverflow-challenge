@@ -17,26 +17,8 @@ const DEFAULT_CREATION_DATE = "2678400";
 
 const API_StackOverflow = axios.create({ baseURL: URL });
 
-function lowerCaseIfExists(value) {
-  return value != null ? value.toLowerCase() : "";
-}
-
-class UserBuilder {
-  async createUsers(users) {
-    const usersToCreate = users.map((user) => ({
-      username: user.display_name,
-      location: lowerCaseIfExists(user.location),
-      creation_date: user.creation_date,
-      last_access_date: user.last_access_date,
-    }));
-    const soUser = await SoUser.createMany(usersToCreate);
-    return soUser;
-  }
-}
-
-const SoUser = use("App/Models/SoUser");
 const loader = use("App/Controllers/Http/UserLoader");
-const builder = new UserBuilder();
+const builder = use("App/Controllers/Http/UserBuilder");
 
 /**
  * Resourceful controller for interacting with schedulers
