@@ -9,7 +9,7 @@ class SoUserSchema extends Schema {
       table.increments();
       table.string("username", 255).notNullable();
       table.string("location");
-      table.timestamp("creation_date");
+      table.bigInteger("creation_date");
       table.timestamps();
     });
   }
