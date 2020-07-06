@@ -10,6 +10,7 @@ class SoUserSchema extends Schema {
       table.string("username", 255).notNullable();
       table.string("location");
       table.bigInteger("creation_date");
+      table.bigInteger("last_access_date");
       table.timestamps();
     });
   }
