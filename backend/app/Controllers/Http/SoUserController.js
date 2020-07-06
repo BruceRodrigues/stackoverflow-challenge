@@ -5,12 +5,32 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const axios = require("axios");
+const SoUser = use("App/Models/SoUser");
 
 const URL = "https://api.stackexchange.com/2.2";
 const SO_KEY = "U4DMV*8nvpm3EOpvf69Rxw((";
 const FILTER = "!40D.p)sqbglw)WhwX";
+const PAGE_SIZE = "100";
+const ORDER = "asc";
+const SORT = "creation";
+const SITE = "stackoverflow";
 
 const API_StackOverflow = axios.create({ baseURL: URL });
+
+class UserBuilder {
+  async createUsers(users) {
+    const usersToCreate = users.map((user) => ({
+      username: user.display_name,
+      location: user.location,
+      creation_date: user.creation_date,
+    }));
+    console.log(usersToCreate);
+    const soUser = await SoUser.createMany(usersToCreate);
+    return soUser;
+  }
+}
+
+const builder = new UserBuilder();
 
 const isFromBrazil = (user) => {
   const location = user.location;
@@ -35,8 +55,9 @@ class SoUserController {
    */
   async index({ request, response }) {
     const res = await API_StackOverflow.get(
-      `/users?pagesize=100&order=asc&sort=creation&site=stackoverflow&filter=${FILTER}`
+      `/users?pagesize=${PAGE_SIZE}&order=${ORDER}&sort=${SORT}&site=${SITE}&filter=${FILTER}`
     );
+    builder.createUsers(res.data.items);
     return res.data;
   }
 }

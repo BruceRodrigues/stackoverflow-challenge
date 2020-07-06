@@ -8,7 +8,9 @@ class SoUserSchema extends Schema {
     this.create("so_users", (table) => {
       table.increments();
       table.string("username", 255).notNullable();
-      table.timestamps("creation_date");
+      table.string("location");
+      table.timestamp("creation_date");
+      table.timestamps();
     });
   }
 
